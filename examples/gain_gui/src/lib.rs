@@ -1,7 +1,7 @@
 use atomic_float::AtomicF32;
 use nih_plug::prelude::*;
-use vizia_plug::ViziaState;
 use std::sync::Arc;
+use vizia_plug::ViziaState;
 
 mod editor;
 
@@ -31,6 +31,9 @@ struct GainParams {
 
     #[id = "gain"]
     pub gain: FloatParam,
+
+    #[id = "pan"]
+    pub pan: FloatParam,
 }
 
 impl Default for Gain {
@@ -62,6 +65,16 @@ impl Default for GainParams {
             .with_unit(" dB")
             .with_value_to_string(formatters::v2s_f32_gain_to_db(2))
             .with_string_to_value(formatters::s2v_f32_gain_to_db()),
+
+            pan: FloatParam::new(
+                "Pan",
+                0.,
+                FloatRange::Linear {
+                    min: -50.,
+                    max: 50.,
+                },
+            )
+            .with_value_to_string(formatters::v2s_f32_rounded(2)),
         }
     }
 }

@@ -1,11 +1,11 @@
 use atomic_float::AtomicF32;
 use nih_plug::prelude::{util, Editor};
-use vizia_plug::vizia::prelude::*;
-use vizia_plug::widgets::*;
-use vizia_plug::{create_vizia_editor, ViziaState, ViziaTheming};
 use std::sync::atomic::Ordering;
 use std::sync::Arc;
 use std::time::Duration;
+use vizia_plug::vizia::prelude::*;
+use vizia_plug::widgets::*;
+use vizia_plug::{create_vizia_editor, ViziaState, ViziaTheming};
 
 use crate::GainParams;
 
@@ -21,7 +21,7 @@ impl Model for Data {}
 
 // Makes sense to also define this here, makes it a bit easier to keep track of
 pub(crate) fn default_state() -> Arc<ViziaState> {
-    ViziaState::new(|| (200, 150))
+    ViziaState::new(|| (200, 200))
 }
 
 pub(crate) fn create(
@@ -50,6 +50,9 @@ pub(crate) fn create(
             Label::new(cx, "Gain");
             ParamSlider::new(cx, Data::params, |params| &params.gain);
 
+            Label::new(cx, "Pan");
+            ParamSlider::new(cx, Data::params, |params| &params.pan);
+
             PeakMeter::new(
                 cx,
                 Data::peak_meter
@@ -58,6 +61,5 @@ pub(crate) fn create(
             );
         })
         .alignment(Alignment::TopCenter);
-
     })
 }
